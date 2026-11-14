@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#271341">
+<meta name="description" content="کتاب جادویی استیو: داستان مصور تعاملی ماینکرفت با صدای آران پارسی">
+<title>کتاب جادویی استیو | رُهام پویان‌مهر</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Tahoma,Arial,sans-serif;color:#fff}
+body{overflow-x:hidden;background:radial-gradient(ellipse at 50% 30%,#482475,#1c103e 66%,#0c0b25);}
+.stars{position:fixed;inset:0;pointer-events:none;opacity:.52;background-image:radial-gradient(#fff9 1px,transparent 1.6px),radial-gradient(#dfbcff88 1px,transparent 2px);background-size:91px 99px,137px 131px}
+header{text-align:center;padding:12px 10px 4px;color:#ffe4a2;font-size:18px;font-weight:bold;text-shadow:0 2px 9px #0009;position:relative}
+header small{display:block;font-size:12px;color:#dfcafa;font-weight:400;margin-top:5px}
+.main{position:relative;display:flex;justify-content:center;align-items:center;padding:8px 12px 5px;perspective:1400px;min-height:unset}
+.book{position:relative;width:min(95vw,650px);height:min(69dvh,730px);min-height:360px;transform-style:preserve-3d;transition:width .28s ease,height .28s ease;isolation:isolate}
+.book.closed,.book.ending{width:min(72vw,425px);height:min(67dvh,650px);min-height:340px;cursor:pointer}
+.page{position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;background:linear-gradient(115deg,#fff5dd,#f3dcad);border:7px solid #a86d31;border-radius:11px 20px 20px 11px;box-shadow:0 12px 32px #0007,inset -8px 0 12px #8e5e2740;backface-visibility:hidden;transform-style:preserve-3d}
+.page::after{content:'';position:absolute;inset:3px;border:2px solid #e9bd68;border-radius:5px 12px 12px 5px;pointer-events:none}
+.book.closed .page,.book.ending .page{border-width:10px;border-right:16px solid #dfbb7a;box-shadow:10px 8px 0 #ded0a5,14px 12px 0 #ad8651,0 17px 25px #0008}
+.page.full img{height:100%;width:100%;object-fit:contain;background:#1e1338;display:block}
+.page.story .illustration{flex:0 0 47%;min-height:0;background:#24143d;overflow:hidden}
+.page.story .illustration img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.page.story .content{flex:1;min-height:0;padding:12px 22px 12px;background:linear-gradient(145deg,#fff4d8,#f5dfb3);color:#39244b;overflow-y:auto;overscroll-behavior:contain;direction:rtl}
+.page.story h2{font-size:clamp(17px,2.1vw,21px);margin:0 0 9px;color:#6b267d;text-align:center}
+.page.story p{font-weight:600;font-size:clamp(15px,1.72vw,19px);line-height:1.75;white-space:pre-line;margin:0}
+.page.story.compact .illustration{flex-basis:37%}
+.page.story.compact .content{padding-top:10px}
+.page.story.compact p{font-size:clamp(16px,1.8vw,19px);line-height:1.6}
+.page.enter{animation:pageIn .30s ease both}
+.page.exit{animation:pageOut .30s ease both;z-index:4}
+@keyframes pageIn{from{opacity:.38;transform:scale(.975)}to{opacity:1;transform:scale(1)}}
+@keyframes pageOut{to{opacity:0;transform:rotateY(34deg)}}
+.book .back-face{position:absolute;inset:0;z-index:-1;backface-visibility:hidden;transform:rotateY(180deg) translateZ(2px);border:9px solid #905421;border-radius:20px 8px 8px 20px;background:#221236;overflow:hidden;box-shadow:0 15px 30px #0008}
+.book .back-face img{width:100%;height:100%;object-fit:contain;display:block}
+.book::after{content:'';pointer-events:none;position:absolute;top:1%;left:0;width:17px;height:98%;transform:translateX(-8px) rotateY(-90deg);background:repeating-linear-gradient(to bottom,#ead5a9 0 3px,#b59a6c 3px 4px)}
+.controls{position:relative;display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;padding:11px 8px 9px}
+button{border:1px solid #e7b65c;border-radius:12px;padding:11px 13px;color:white;background:linear-gradient(#823eb8,#4e247b);font:bold 14px Tahoma,Arial,sans-serif;cursor:pointer;box-shadow:0 3px 0 #2e174a;touch-action:manipulation}
+button:active{transform:translateY(2px)}button:disabled{opacity:.45;cursor:not-allowed}
+button.active{background:linear-gradient(#b16add,#5d308d)}
+.counter{min-width:60px;font-size:14px;color:#ffe1a2;text-align:center}
+.volume-control{display:flex;align-items:center;gap:8px;padding:8px 9px;background:#4c2573;border:1px solid #e4b46b;border-radius:12px;direction:ltr;font-size:13px}
+.volume-control input{width:120px;accent-color:#efc971;cursor:pointer}
+#volDisplay{font-size:13px;min-width:32px;color:#ffdfa7}
+#sceneHint{text-align:center;color:#f6dca2;font-size:12px;min-height:18px;padding:0 8px}
+.hint{text-align:center;font-size:11px;color:#d1bce9;padding:4px 14px 15px}
+#book.rotation{touch-action:none;cursor:grab;transition:none!important;will-change:transform}
+#book.rotation:active{cursor:grabbing}
+#book.rotation .page{pointer-events:none}
+.modal{position:fixed;z-index:50;inset:0;background:#08031ddc;display:none;align-items:center;justify-content:center;padding:14px}
+.modal.visible{display:flex}
+.modal-inner{width:min(94vw,410px);padding:22px 17px;background:linear-gradient(145deg,#4b286f,#21173d);border:2px solid #e7c174;border-radius:18px;text-align:center;box-shadow:0 20px 45px #0009}
+.modal h3{margin:0 0 12px;color:#fff0b2}.modal p{font-size:14px;color:#e3d6ee}.modal button{margin:5px}
+@media(max-width:680px){header{padding-top:7px;font-size:16px}header small{font-size:11px}.main{padding:6px}.book{height:min(66dvh,690px);min-height:300px}.book.closed,.book.ending{height:min(65dvh,620px);min-height:300px}.page.story .illustration{flex-basis:39%}.page.story.compact .illustration{flex-basis:30%}.page.story .content{padding:8px 13px 10px}.page.story h2{font-size:16px;margin-bottom:6px}.page.story p{font-size:15px;line-height:1.55}.page.story.compact p{font-size:15px;line-height:1.48}.controls{gap:5px}.controls button{font-size:12px;padding:9px 10px}.volume-control{padding:5px}.volume-control input{width:84px}}
+@media(max-height:580px){.book{height:57dvh;min-height:220px}.book.closed,.book.ending{height:57dvh;min-height:210px}header small{display:none}.page.story .illustration{flex-basis:28%}.page.story.compact .illustration{flex-basis:22%}.page.story p{font-size:13px;line-height:1.3}.page.story.compact p{font-size:13px;line-height:1.3}.controls button{font-size:11px;padding:7px 8px}.controls{padding-top:5px}}
+@media(prefers-reduced-motion:reduce){.page.enter,.page.exit{animation:none}}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<header>📖 کتاب جادویی استیو<small>داستان تصویری کلاس پنجم شهریار · تهیه‌کننده: رُهام پویان‌مهر</small></header>
+<main class="main"><div id="book" class="book closed" role="button" tabindex="0" aria-label="باز کردن کتاب"></div></main>
+<nav class="controls" aria-label="کنترل‌های کتاب">
+<button id="next">صفحه بعد ❮</button><span id="counter" class="counter">۱ / ۱۱</span><button id="prev">❯ صفحه قبل</button>
+<button id="music">♫ موسیقی: خاموش</button>
+<label class="volume-control" title="بلندی موسیقی">🔉 <input id="musicVolume" type="range" min="0" max="100" value="80" aria-label="بلندی موسیقی"><output id="volDisplay">۸۰٪</output></label>
+<button id="narrate" aria-pressed="false">🎙 راوی فارسی</button>
+<button id="auto" aria-pressed="false">▶ نمایش خودکار</button>
+<button id="closeBook">📕 بستن کتاب</button>
+<button id="rotateBook">🔄 چرخاندن: خاموش</button>
+<button id="full">⛶ تمام‌صفحه</button>
+</nav>
+<div id="sceneHint" aria-live="polite"></div>
+<div class="hint">برای ورق‌زدن از دکمه‌ها یا حرکت انگشت استفاده کن؛ هنگام پخش راوی، صفحات خودکار ورق می‌خورند.</div>
+<div id="resumeModal" class="modal" role="dialog" aria-modal="true" aria-label="شروع خواندن">
+<div class="modal-inner"><h3>📖 کتاب جادویی استیو</h3><p>از کجا بخوانیم؟</p>
+<button id="continueReading">📍 خواندن از ادامه</button><button id="startOver">✨ خواندن از اول</button><button id="cancelOpen">انصراف</button>
+</div></div>
+<script>
+'use strict';
+const PAGES=[{"image":"1000025746.png","type":"full","title":"جلد","music":0,"asset":"./image-01.webp"},{"image":"1000025774.jpg","type":"full","title":"مشخصات کتاب","music":1,"asset":"./image-02.webp"},{"image":"1000025768.png","type":"story","title":"صفحه اول · معرفی استیو","text":"روزی روزگاری، در دنیای زیبای ماینکرفت، استیو در دهکده‌ای کوچک زندگی می‌کرد.\nاو عاشق ماجراجویی، ساختن خانه و پیدا کردن الماس بود، اما علاقه زیادی به کتاب خواندن نداشت.\nیک روز هنگام گردش در دهکده، کتابخانه‌ای کوچک و زیبا پیدا کرد.","music":2,"asset":"./image-03.webp"},{"image":"1000025795.png","type":"story","title":"صفحه دوم · کتاب جادویی","text":"استیو وارد کتابخانه شد و ویلیجر پیری را دید.\nویلیجر به او گفت: «استیو! دوست داری یک کتاب جادویی داشته باشی؟»\nاستیو با تعجب گفت: «مگر کتاب هم جادو دارد؟»\nویلیجر لبخند زد و کتابی به او داد.\nاستیو کتاب را باز کرد. در صفحه اول نوشته شده بود:\n«برای پیدا کردن بزرگ‌ترین گنج ماینکرفت، باید از سه مرحله عبور کنی.»","music":3,"asset":"./image-04.webp"},{"image":"1000025750.png","type":"full","title":"میان‌صفحه · دهکده ماینکرفت","music":4,"asset":"./image-05.webp"},{"image":"1000025792.png","type":"story","title":"صفحه سوم · عبور از رودخانه","text":"استیو با هیجان راه افتاد تا گنج را پیدا کند.\nپس از کمی پیاده‌روی به رودخانه‌ای بزرگ رسید، اما هیچ پلی وجود نداشت!\nاستیو کتاب را باز کرد و یاد گرفت چگونه با چوب یک پل بسازد.\nاو با خوشحالی پل را ساخت و از رودخانه عبور کرد.","music":5,"asset":"./image-06.webp"},{"image":"1000025793.png","type":"story","title":"صفحه چهارم · مشعل در غار","text":"استیو به غاری تاریک رسید. داخل غار آن‌قدر تاریک بود که نمی‌توانست چیزی ببیند.\nاو دوباره کتاب را باز کرد و یاد گرفت چگونه با چوب و زغال‌سنگ مشعل درست کند.\nاستیو مشعلی ساخت و غار را روشن کرد.\nسپس با شجاعت از غار عبور کرد و به قلعه‌ای بزرگ رسید.","music":6,"asset":"./image-07.webp"},{"image":"1000025796.jpg","type":"full","title":"میان‌صفحه · استیو در حال نوشتن","music":8,"asset":"./image-08.webp"},{"image":"1000025761.png","type":"story","title":"صفحه پنجم · صندوق گنج","text":"استیو وارد قلعه شد و صندوقی بزرگ پیدا کرد.\nبا خوشحالی گفت: «بالاخره گنج را پیدا کردم!»\nاما وقتی صندوق را باز کرد، هیچ الماس یا زمردی داخل آن نبود!\nفقط یک کتاب کوچک پیدا کرد که روی آن نوشته شده بود:\n«دانایی گنجی است که هیچ‌وقت تمام نمی‌شود.»\nاستیو با تعجب به کتاب نگاه کرد.","music":7,"asset":"./image-09.webp"},{"image":"1000025794.png","type":"story","title":"صفحه ششم · گنج واقعی","text":"استیو کمی فکر کرد و فهمید که بدون کمک کتاب نمی‌توانست از رودخانه و غار عبور کند.\nاو فهمید که کتاب‌ها می‌توانند چیزهای زیادی به ما یاد بدهند.\nاستیو به دهکده برگشت و تصمیم گرفت هر روز کتاب بخواند.\nاو حتی یک کتابخانه بزرگ برای تمام ویلیجرها ساخت!\nاز آن روز به بعد، استیو فهمید که ارزش دانایی از یک صندوق پر از الماس هم بیشتر است.","music":9,"asset":"./image-10.webp"},{"image":"1000025798.jpg","type":"full","title":"صفحه پایانی · استیو و هاپو","music":9,"asset":"./image-11.webp"}];
+const AUDIO_TRACKS={2:'./audio-01.mp3',3:'./audio-02.mp3',5:'./audio-03.mp3',6:'./audio-04.mp3',8:'./audio-05.mp3',9:'./audio-06.mp3'};
+const $=id=>document.getElementById(id);
+const book=$('book'),modal=$('resumeModal'),hint=$('sceneHint');
+let current=0,opened=false,busy=false,savedPage=1;
+let narrating=false,automatic=false,voiceToken=0,silentTimer=0,autoTimer=0;
+const narrator=new Audio();narrator.preload='auto';narrator.volume=1;
+let musicOn=false,musicLevel=.8,musicCtx=null,musicTimer=null,noteIdx=0;
+let rotateMode=false,yaw=0,pitch=0,drag=null,suppressTap=false;
+
+const imageCache=PAGES.map((p,i)=>{const im=new Image();im.decoding='async';if(i<3)im.src=p.asset;return im});
+function getImage(i){const im=imageCache[i];if(!im.src)im.src=PAGES[i].asset;return im;}
+const audioBlobUrls=new Map();
+const audioPromises=new Map();
+// Download the entire narration before playback so mobile-network stalls do not interrupt speech.
+function cacheAudio(index){
+ if(!AUDIO_TRACKS[index])return Promise.resolve(null);
+ if(audioBlobUrls.has(index))return Promise.resolve(audioBlobUrls.get(index));
+ if(audioPromises.has(index))return audioPromises.get(index);
+ const promise=fetch(AUDIO_TRACKS[index],{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.blob()}).then(blob=>{
+  if(!blob.size)throw Error('empty audio');
+  const url=URL.createObjectURL(blob);audioBlobUrls.set(index,url);return url;
+ }).catch(err=>{audioPromises.delete(index);throw err});
+ audioPromises.set(index,promise);return promise;
+}
+// Only the first narration loads immediately; fetching six MP3s at once delays playback.
+cacheAudio(2).catch(()=>{});
+const tracks=[0,5,0,7,0,2,-3,5,0,0];
+const notes=[0,4,7,9,7,4,2,4];
+function createPage(index){
+ const p=PAGES[index],el=document.createElement('section');el.className='page '+p.type+(p.type==='story'&&[3,8,9].includes(index)?' compact':'');el.dataset.page=String(index);el.setAttribute('aria-label',p.title);
+ if(p.type==='full'){
+  const im=document.createElement('img');im.src=getImage(index).src;im.alt=p.title;im.decoding='async';el.append(im);
+ } else {
+  const ill=document.createElement('div');ill.className='illustration';const im=document.createElement('img');im.src=getImage(index).src;im.alt=p.title;im.decoding='async';ill.append(im);
+  const content=document.createElement('div');content.className='content';const h=document.createElement('h2');h.textContent=p.title;const text=document.createElement('p');text.textContent=p.text;content.append(h,text);el.append(ill,content);
+ }
+ return el;
+}
+function prefetch(index){for(let j=index+1;j<=Math.min(index+2,PAGES.length-1);j++){getImage(j);}}
+function render(index){
+ current=index;book.querySelectorAll('.page').forEach(n=>n.remove());const el=createPage(index);book.prepend(el);
+ if(index===10){book.classList.add('ending');book.classList.remove('closed');}else book.classList.remove('ending');
+ $('counter').textContent=(index+1).toLocaleString('fa-IR')+' / '+PAGES.length.toLocaleString('fa-IR');
+ $('prev').disabled=!opened||busy||index===0||narrating;$('next').disabled=!opened||busy||index===10||narrating;
+ hint.textContent=PAGES[index].title;
+ prefetch(index);
+}
+function ensureBack(){const div=document.createElement('div');div.className='back-face';const img=document.createElement('img');img.src=getImage(10).src;img.alt='پشت جلد کتاب جادویی استیو';div.append(img);book.append(div)}
+function afterFlip(){busy=false;book.classList.remove('flipping');render(current);}
+function turnTo(index,callback){
+ if(busy||index<0||index>=PAGES.length)return false;
+ if(!opened&&index!==0)opened=true;
+ if(index===current){callback?.();return true;}
+ busy=true;const old=book.querySelector('.page');
+ const fresh=createPage(index);fresh.classList.add('enter');book.prepend(fresh);
+ if(old)old.classList.add('exit');
+ current=index;
+ $('prev').disabled=true;$('next').disabled=true;
+ window.setTimeout(()=>{old?.remove();fresh.classList.remove('enter');busy=false;render(index);callback?.();},310);
+ return true;
+}
+function openAt(index){modal.classList.remove('visible');opened=true;book.classList.remove('closed','ending');book.removeAttribute('role');book.removeAttribute('tabindex');turnTo(Math.max(1,index));}
+function showOpenMenu(){if(opened)return; $('continueReading').style.display=savedPage>1?'inline-block':'none';modal.classList.add('visible');}
+function cancelNarration(){narrating=false;voiceToken++;window.clearTimeout(silentTimer);narrator.pause();narrator.onended=null;narrator.onerror=null;updateButtons();}
+function closeNow(){
+ if(busy)return;
+ if(opened&&current>0&&current<10)savedPage=current;
+ else if(current===10)savedPage=1;
+ cancelNarration();stopAuto();opened=false;resetRotation();
+ book.classList.remove('ending');book.classList.add('closed');book.setAttribute('role','button');book.setAttribute('tabindex','0');render(0);
+}
+function updateButtons(){
+ $('narrate').textContent=narrating?'🎙 راوی: روشن (آران پارسی)':'🎙 راوی فارسی';$('narrate').classList.toggle('active',narrating);$('narrate').setAttribute('aria-pressed',String(narrating));
+ $('auto').textContent=narrating?'⏸ نمایش خودکار با راوی':automatic?'⏸ توقف نمایش خودکار':'▶ نمایش خودکار';$('auto').classList.toggle('active',automatic||narrating);$('auto').disabled=narrating;$('auto').setAttribute('aria-pressed',String(automatic||narrating));
+ $('prev').disabled=!opened||busy||current===0||narrating;$('next').disabled=!opened||busy||current===10||narrating;
+}
+function preloadFollowingAudio(index){for(let j=index+1;j<10;j++){if(AUDIO_TRACKS[j]){cacheAudio(j);break;}}}
+// Wait for the current illustration to be visually ready, then hold it for two seconds.
+function waitForPageImage(token,callback){
+ const img=book.querySelector('.page img');
+ const ready=()=>{
+  if(!narrating||token!==voiceToken)return;
+  window.clearTimeout(silentTimer);
+  silentTimer=window.setTimeout(()=>{
+   if(narrating&&token===voiceToken)callback();
+  },2000);
+ };
+ if(!img||img.complete){ready();return;}
+ let finished=false;
+ const done=()=>{if(finished)return;finished=true;img.removeEventListener('load',done);img.removeEventListener('error',done);ready()};
+ img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});
+ // If a network request stalls, keep the story usable.
+ window.setTimeout(done,12000);
+}
+async function narratedPage(token){
+ if(!narrating||token!==voiceToken)return;
+ const page=current;
+ hint.textContent=PAGES[page].title;
+ const path=AUDIO_TRACKS[page];
+ if(!path){waitForPageImage(token,()=>goNarrationNext(token));return;}
+ // Avoid streaming a half-loaded MP3; wait for its local cached copy first.
+ hint.textContent='🎙 آماده‌سازی صدای راوی…';
+ let url;try{url=await cacheAudio(page)}catch(e){if(narrating&&token===voiceToken)hint.textContent='خطا در دریافت صدا؛ اتصال اینترنت را بررسی کن و راوی را دوباره روشن کن.';return;}
+ if(!narrating||token!==voiceToken||current!==page)return;
+ narrator.onended=null;narrator.onerror=null;narrator.onwaiting=null;narrator.onplaying=null;
+ narrator.pause();narrator.src=url;narrator.load();
+ narrator.onended=()=>{if(narrating&&token===voiceToken)goNarrationNext(token)};
+ narrator.onerror=()=>{if(narrating&&token===voiceToken)hint.textContent='بارگذاری صدای این صفحه ناموفق بود؛ اینترنت را بررسی کن.'};
+ narrator.onwaiting=()=>{if(narrating&&token===voiceToken)hint.textContent='🎙 صدا در حال آماده‌شدن…'};
+ narrator.onplaying=()=>{if(narrating&&token===voiceToken)hint.textContent=PAGES[page].title};
+ try{await narrator.play()}catch(e){if(narrating&&token===voiceToken)hint.textContent='برای پخش صدا، راوی را خاموش و دوباره روشن کن.'}
+ setTimeout(()=>{if(narrating&&token===voiceToken)preloadFollowingAudio(page)},1300);
+}
+function goNarrationNext(token){
+ if(!narrating||token!==voiceToken)return;
+ if(current===10){cancelNarration();return}
+ const to=current+1;
+ if(to===10){turnTo(to,()=>waitForPageImage(token,()=>cancelNarration()));return;}
+ turnTo(to,()=>{if(narrating&&token===voiceToken)narratedPage(token)});
+}
+function startNarration(){
+ stopAuto();narrating=true;voiceToken++;const token=voiceToken;updateButtons();
+ // Silent illustrated pages pause for 2 seconds; narrated pages start speaking immediately.
+ if(!opened){
+  opened=true;book.classList.remove('closed','ending');book.removeAttribute('role');
+  turnTo(1,()=>narratedPage(token));
+ }else if(current===10){
+  turnTo(1,()=>narratedPage(token));
+ }else narratedPage(token);
+}
+function stopAuto(){automatic=false;clearTimeout(autoTimer);updateButtons();}
+function scheduleAuto(){
+ if(!automatic||narrating)return;
+ if(current===10){stopAuto();return}
+ const dur=PAGES[current].text?Math.max(6500,Math.min(19000,PAGES[current].text.length*67)):2100;
+ autoTimer=setTimeout(()=>{if(automatic&&!busy){turnTo(current+1,()=>scheduleAuto())}else if(automatic)scheduleAuto()},dur);
+}
+function toggleAuto(){if(narrating)return;automatic=!automatic;clearTimeout(autoTimer);if(automatic){if(!opened){opened=true;book.classList.remove('closed');turnTo(1,()=>scheduleAuto())}else scheduleAuto()}updateButtons()}
+function getCtx(){if(!musicCtx)musicCtx=new(window.AudioContext||window.webkitAudioContext)();if(musicCtx.state==='suspended')musicCtx.resume().catch(()=>{});return musicCtx}
+function playTone(frequency,start,duration,level){
+ if(!musicOn)return;const ctx=getCtx(),o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=frequency;g.gain.setValueAtTime(.0001,start);g.gain.exponentialRampToValueAtTime(Math.max(.001,level),start+.035);g.gain.exponentialRampToValueAtTime(.0001,start+duration);o.connect(g).connect(ctx.destination);o.start(start);o.stop(start+duration+.04);
+}
+function musicBeat(){if(!musicOn)return;const c=getCtx(),idx=noteIdx++;const r=tracks[Math.min(current,9)],semi=notes[idx%notes.length]+r,f=220*Math.pow(2,semi/12),duck=narrating?.42:1;playTone(f,c.currentTime,.27,.11*musicLevel*duck);if(idx%4===0)playTone(f/2,c.currentTime,.5,.045*musicLevel*duck)}
+function toggleMusic(){musicOn=!musicOn;$('music').textContent=musicOn?'♫ موسیقی: روشن':'♫ موسیقی: خاموش';$('music').classList.toggle('active',musicOn);clearInterval(musicTimer);if(musicOn){getCtx();musicBeat();musicTimer=setInterval(musicBeat,330)}}
+function applyRotation(){book.style.transform='rotateX('+pitch+'deg) rotateY('+yaw+'deg)'}
+function resetRotation(){yaw=0;pitch=0;drag=null;rotateMode=false;book.classList.remove('rotation');book.style.transform='';$('rotateBook').textContent='🔄 چرخاندن: خاموش';$('rotateBook').classList.remove('active')}
+function toggleRotation(){rotateMode=!rotateMode;book.classList.toggle('rotation',rotateMode);$('rotateBook').classList.toggle('active',rotateMode);$('rotateBook').textContent=rotateMode?'🔄 چرخاندن: روشن':'🔄 چرخاندن: خاموش';if(!rotateMode)resetRotation()}
+function changePage(delta){if(narrating||busy)return;if(!opened){showOpenMenu();return}turnTo(current+delta)}
+function interactCover(){if(rotateMode||narrating||busy)return;if(!opened)showOpenMenu();else if(current===10)closeNow()}
+book.addEventListener('click',e=>{if(suppressTap){suppressTap=false;return}interactCover()});
+book.addEventListener('keydown',e=>{if(!opened&&(e.key==='Enter'||e.key===' ')){e.preventDefault();showOpenMenu()}});
+$('next').addEventListener('click',()=>changePage(1));$('prev').addEventListener('click',()=>changePage(-1));
+$('closeBook').addEventListener('click',closeNow);
+$('startOver').addEventListener('click',()=>openAt(1));$('continueReading').addEventListener('click',()=>openAt(savedPage));$('cancelOpen').addEventListener('click',()=>modal.classList.remove('visible'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('visible')});
+$('narrate').addEventListener('click',()=>narrating?cancelNarration():startNarration());$('auto').addEventListener('click',toggleAuto);
+$('music').addEventListener('click',toggleMusic);
+$('musicVolume').addEventListener('input',e=>{musicLevel=Number(e.target.value)/100;$('volDisplay').textContent=Number(e.target.value).toLocaleString('fa-IR')+'٪'});
+$('rotateBook').addEventListener('click',toggleRotation);
+$('full').addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()});
+document.addEventListener('keydown',e=>{if(modal.classList.contains('visible')&&e.key==='Escape'){modal.classList.remove('visible');return}if(e.key==='ArrowLeft')changePage(1);if(e.key==='ArrowRight')changePage(-1)});
+let touchX=null;
+book.addEventListener('touchstart',e=>{if(!rotateMode)touchX=e.changedTouches[0].clientX},{passive:true});
+book.addEventListener('touchend',e=>{if(rotateMode||touchX===null||narrating)return;const dx=e.changedTouches[0].clientX-touchX;touchX=null;if(Math.abs(dx)>65){changePage(dx<0?1:-1);suppressTap=true;setTimeout(()=>{suppressTap=false},350)}},{passive:true});
+book.addEventListener('pointerdown',e=>{if(!rotateMode)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,yaw,pitch,moved:false};book.setPointerCapture?.(e.pointerId)},true);
+book.addEventListener('pointermove',e=>{if(!drag||!rotateMode)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.moved=drag.moved||Math.abs(dx)>6||Math.abs(dy)>6;yaw=drag.yaw+dx*.9;pitch=Math.max(-40,Math.min(40,drag.pitch-dy*.45));applyRotation()},true);
+book.addEventListener('pointerup',e=>{if(!drag)return;if(drag.moved){suppressTap=true;setTimeout(()=>suppressTap=false,400)}drag=null},true);
+// Keep narration playing during transient mobile browser visibility changes.
+ensureBack();render(0);updateButtons();
+</script>
+</body></html>
